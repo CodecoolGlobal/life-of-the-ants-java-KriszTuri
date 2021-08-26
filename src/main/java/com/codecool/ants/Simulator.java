@@ -17,8 +17,9 @@ public class Simulator {
         else{
             c.setWidth(userWidth);
             c.fillColony();
-            c.printColony(c.getColony());
         }
+        c.generateAnts(3,1,1);
+        c.display(c.getColony());
     }
 
 }

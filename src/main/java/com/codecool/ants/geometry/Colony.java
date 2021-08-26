@@ -1,7 +1,10 @@
 package com.codecool.ants.geometry;
 
 import java.util.Arrays;
-import java.util.Scanner;
+import java.util.Random;
+
+import com.codecool.ants.geometry.Soldiers;
+
 
 public class Colony {
     private int width;
@@ -32,11 +35,13 @@ public class Colony {
                 Arrays.fill(colonyToBeFilled[i], "*");
             }
         }
+        //Placing the Queen
         colonyToBeFilled[centerOfColony][centerOfColony] = "Q";
         setColony(colonyToBeFilled);
     }
 
-    public void printColony(String[][] array){
+    public void display(String[][] array){
+        System.out.println("------------------------------------");
         for (String[] x : array)
         {
             for (String y : x)
@@ -45,6 +50,42 @@ public class Colony {
             }
             System.out.println();
         }
+    }
+
+    public void generateAnts(int numOfSoldiers, int numOfDrones, int numOfWorkers){
+        Soldiers soldiers = new Soldiers();
+        Drones drones = new Drones();
+        Workers workers = new Workers();
+
+        for(int i = 0; i < numOfSoldiers; i++){
+            int[] randomCoordinates = randomGeneratedCoordinates();
+            colony[randomCoordinates[0]][randomCoordinates[1]] = soldiers.letterForDisplay;
+        }
+
+        for(int i = 0; i < numOfDrones; i++){
+            int[] randomCoordinates = randomGeneratedCoordinates();
+            colony[randomCoordinates[0]][randomCoordinates[1]] = drones.letterForDisplay;
+        }
+
+        for(int i = 0; i < numOfWorkers; i++){
+            int[] randomCoordinates = randomGeneratedCoordinates();
+            colony[randomCoordinates[0]][randomCoordinates[1]] = workers.letterForDisplay;
+        }
+    }
+
+    public int[] randomGeneratedCoordinates(){
+        Random random = new Random();
+        int randomCoordinate1 = random.nextInt(width - 1) + 1;
+        int randomCoordinate2 = random.nextInt(width - 1) + 1;
+        return new int[]{randomCoordinate1, randomCoordinate2};
+    }
+
+    public void update(){
+
+    }
+
+    public void act() {
+
     }
 
 }
