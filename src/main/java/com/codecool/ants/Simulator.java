@@ -11,9 +11,14 @@ public class Simulator {
         Scanner getUserInput = new Scanner(System.in);
         System.out.println("Colony size? ");
         int userWidth = getUserInput.nextInt();
-        c.setWidth(userWidth);
-        c.fillColony();
-        c.writeColony();
+        if(userWidth%2==0){
+            System.out.println("Irregular numbers only.");
+        }
+        else{
+            c.setWidth(userWidth);
+            c.fillColony();
+            c.printColony(c.getColony());
+        }
     }
 
 }
