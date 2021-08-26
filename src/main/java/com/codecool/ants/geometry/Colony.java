@@ -3,8 +3,6 @@ package com.codecool.ants.geometry;
 import java.util.Arrays;
 import java.util.Random;
 
-import com.codecool.ants.geometry.Soldiers;
-
 
 public class Colony {
     private int width;
