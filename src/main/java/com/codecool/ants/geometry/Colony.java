@@ -74,19 +74,35 @@ public class Colony {
         checkCoordinates(numOfWorkers, workers.letterForDisplay);
     }
 
-    private void checkCoordinates(int numOfSoldiers, String letterForDisplay) {
-        for(int i = 0; i < numOfSoldiers; i++){
+    /**Checks generated coordinate - if it's already occupied, generates a new one and checks that one as well**/
+    private void checkCoordinates(int numOfAnts, String letterForDisplay) {
+        for(int i = 0; i < numOfAnts; i++){
             int[] randomCoordinates = randomGeneratedCoordinates();
-            boolean isCoordTaken = false;
-            do{
-                randomCoordinates = randomGeneratedCoordinates();
-                if(colony[randomCoordinates[0]][randomCoordinates[1]]!="*"){
-                    isCoordTaken = true;
-                }
-                else{
-                    colony[randomCoordinates[0]][randomCoordinates[1]] = letterForDisplay;
-                }
-            } while(isCoordTaken);
+            boolean isCoordinateTaken = isCoordinateTaken(randomCoordinates);
+            //System.out.println(Arrays.toString(randomCoordinates) +" is: "+isCoordinateTaken);
+            if(!isCoordinateTaken){
+                colony[randomCoordinates[0]][randomCoordinates[1]] = letterForDisplay;
+            }
+            else{
+                do{
+                    int[] newRandomCoordinates = randomGeneratedCoordinates();
+                    isCoordinateTaken = isCoordinateTaken(newRandomCoordinates);
+                    //System.out.println("new coords: "+ Arrays.toString(newRandomCoordinates) +" is: "+isCoordinateTaken);
+                    if(!isCoordinateTaken){
+                        colony[newRandomCoordinates[0]][newRandomCoordinates[1]] = letterForDisplay;
+                    }
+                }while(isCoordinateTaken);
+
+            }
+        }
+    }
+
+    private boolean isCoordinateTaken(int[] randomCoordinates){
+        if(colony[randomCoordinates[0]][randomCoordinates[1]] != "*"){
+            return true;
+        }
+        else{
+            return false;
         }
     }
 
