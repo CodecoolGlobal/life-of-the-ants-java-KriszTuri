@@ -62,26 +62,36 @@ public class Colony {
     }
 
     /**Generates soldiers, drones and workers, places them in the colony array.**/
+    //TODO: individual ants, not one group (to save the position of each ant)
     public void generateAnts(int numOfSoldiers, int numOfDrones, int numOfWorkers){
-        Soldiers soldiers = new Soldiers();
-        Drones drones = new Drones();
-        Workers workers = new Workers();
+        for(int i=0; i<numOfSoldiers; i++){
+            Soldiers soldier = new Soldiers();
+            soldier.setName("Soldier nr. "+(i+1));
+            checkCoordinates(soldier,soldier.letterForDisplay);
+            soldier.printDatas();
+        }
 
-        checkCoordinates(numOfSoldiers, soldiers.letterForDisplay);
+        for(int i=0; i<numOfDrones; i++){
+            Drones drone = new Drones();
+            drone.setName("Drone nr. "+(i+1));
+            checkCoordinates(drone, drone.letterForDisplay);
+        }
 
-        checkCoordinates(numOfDrones, drones.letterForDisplay);
-
-        checkCoordinates(numOfWorkers, workers.letterForDisplay);
+        for(int i=0; i<numOfWorkers; i++){
+            Workers worker = new Workers();
+            worker.setName("Worker nr. "+(i+1));
+            checkCoordinates(worker, worker.letterForDisplay);
+        }
     }
 
     /**Checks generated coordinate - if it's already occupied, generates a new one and checks that one as well**/
-    private void checkCoordinates(int numOfAnts, String letterForDisplay) {
-        for(int i = 0; i < numOfAnts; i++){
+    private void checkCoordinates(Ants ants,String letterForDisplay) {
             int[] randomCoordinates = randomGeneratedCoordinates();
             boolean isCoordinateTaken = isCoordinateTaken(randomCoordinates);
             //System.out.println(Arrays.toString(randomCoordinates) +" is: "+isCoordinateTaken);
             if(!isCoordinateTaken){
                 colony[randomCoordinates[0]][randomCoordinates[1]] = letterForDisplay;
+                ants.spawnPosition = randomCoordinates;
             }
             else{
                 do{
@@ -90,11 +100,10 @@ public class Colony {
                     //System.out.println("new coords: "+ Arrays.toString(newRandomCoordinates) +" is: "+isCoordinateTaken);
                     if(!isCoordinateTaken){
                         colony[newRandomCoordinates[0]][newRandomCoordinates[1]] = letterForDisplay;
+                        ants.spawnPosition = newRandomCoordinates;
                     }
                 }while(isCoordinateTaken);
-
             }
-        }
     }
 
     private boolean isCoordinateTaken(int[] randomCoordinates){
@@ -106,13 +115,13 @@ public class Colony {
         }
     }
 
+    public void act() {
+
+    }
 
     public void update(){
 
     }
 
-    public void act() {
-
-    }
 
 }
