@@ -26,7 +26,7 @@ public class Colony {
         this.colony = colony;
     }
 
-/**Fills the colony, places the Queen in the middle**/
+/**Creates the colony, fills it with *s, places the Queen in the middle**/
     public void fillColony(){
         String[][] colonyToBeFilled = new String[width][width];
         int centerOfColony = (int) Math.floor((double)width/2);
@@ -62,57 +62,55 @@ public class Colony {
     }
 
     /**Generates soldiers, drones and workers, places them in the colony array.**/
-    //TODO: individual ants, not one group (to save the position of each ant)
     public void generateAnts(int numOfSoldiers, int numOfDrones, int numOfWorkers){
         for(int i=0; i<numOfSoldiers; i++){
             Soldiers soldier = new Soldiers();
             soldier.setName("Soldier nr. "+(i+1));
-            checkCoordinates(soldier,soldier.letterForDisplay);
-            soldier.printDatas();
+            soldier.setMovePattern("patrol");
+            placeAnt(soldier, soldier.letterForDisplay);
         }
 
         for(int i=0; i<numOfDrones; i++){
             Drones drone = new Drones();
             drone.setName("Drone nr. "+(i+1));
-            checkCoordinates(drone, drone.letterForDisplay);
+            drone.setMovePattern("approachQueen");
+            placeAnt(drone, drone.letterForDisplay);
         }
 
         for(int i=0; i<numOfWorkers; i++){
             Workers worker = new Workers();
             worker.setName("Worker nr. "+(i+1));
-            checkCoordinates(worker, worker.letterForDisplay);
+            worker.setMovePattern();
+            placeAnt(worker, worker.letterForDisplay);
         }
     }
 
     /**Checks generated coordinate - if it's already occupied, generates a new one and checks that one as well**/
-    private void checkCoordinates(Ants ants,String letterForDisplay) {
-            int[] randomCoordinates = randomGeneratedCoordinates();
-            boolean isCoordinateTaken = isCoordinateTaken(randomCoordinates);
-            //System.out.println(Arrays.toString(randomCoordinates) +" is: "+isCoordinateTaken);
+    private void placeAnt(Ants ant, String letterForDisplay) {
+            int[] generatedCoordinates = randomGeneratedCoordinates();
+            boolean isCoordinateTaken = isCoordinateTaken(generatedCoordinates);
             if(!isCoordinateTaken){
-                colony[randomCoordinates[0]][randomCoordinates[1]] = letterForDisplay;
-                ants.spawnPosition = randomCoordinates;
+                colony[generatedCoordinates[0]][generatedCoordinates[1]] = letterForDisplay;
+                Position position = new Position(generatedCoordinates[0], generatedCoordinates[1], ant.name);
+                ant.setPosition(position.getPosition());
+                ant.printAntData();
             }
             else{
                 do{
                     int[] newRandomCoordinates = randomGeneratedCoordinates();
                     isCoordinateTaken = isCoordinateTaken(newRandomCoordinates);
-                    //System.out.println("new coords: "+ Arrays.toString(newRandomCoordinates) +" is: "+isCoordinateTaken);
                     if(!isCoordinateTaken){
                         colony[newRandomCoordinates[0]][newRandomCoordinates[1]] = letterForDisplay;
-                        ants.spawnPosition = newRandomCoordinates;
+                        Position position = new Position(generatedCoordinates[0], generatedCoordinates[1], ant.name);
+                        ant.setPosition(position.getPosition());
+                        ant.printAntData();
                     }
                 }while(isCoordinateTaken);
             }
     }
 
-    private boolean isCoordinateTaken(int[] randomCoordinates){
-        if(colony[randomCoordinates[0]][randomCoordinates[1]] != "*"){
-            return true;
-        }
-        else{
-            return false;
-        }
+    private boolean isCoordinateTaken(int[] generatedCoordinates){
+        return colony[generatedCoordinates[0]][generatedCoordinates[1]] != "*";
     }
 
     public void act() {
@@ -120,6 +118,11 @@ public class Colony {
     }
 
     public void update(){
+
+    }
+
+    public void moveAnt(int[] oldPosition, int[] newPosition, String[] colony, Ants ant){
+
 
     }
 
