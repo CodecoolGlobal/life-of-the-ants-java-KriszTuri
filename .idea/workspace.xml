@@ -5,6 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ef8ef2c7-ff07-4dcc-b5e8-7172b3e004c6" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/codecool/ants/geometry/Ants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/codecool/ants/geometry/Ants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/codecool/ants/geometry/Colony.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/codecool/ants/geometry/Colony.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -77,6 +79,7 @@
       <workItem from="1629926972210" duration="3385000" />
       <workItem from="1629972591020" duration="236000" />
       <workItem from="1629973232602" duration="5593000" />
+      <workItem from="1631045807412" duration="2448000" />
     </task>
     <servers />
   </component>

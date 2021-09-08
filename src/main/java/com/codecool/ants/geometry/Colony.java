@@ -26,17 +26,19 @@ public class Colony {
         this.colony = colony;
     }
 
+    public int centerOfColony() {
+        return (int) Math.floor((double)width/2);
+    }
+
 /**Creates the colony, fills it with *s, places the Queen in the middle**/
     public void fillColony(){
         String[][] colonyToBeFilled = new String[width][width];
-        int centerOfColony = (int) Math.floor((double)width/2);
+
         for (int i = 0; i < width; i++) {
             for(int j =0; j < colonyToBeFilled[i].length; j++){
                 Arrays.fill(colonyToBeFilled[i], "*");
             }
         }
-        //Placing the Queen
-        colonyToBeFilled[centerOfColony][centerOfColony] = "Q";
         setColony(colonyToBeFilled);
     }
 
@@ -61,14 +63,16 @@ public class Colony {
         return new int[]{randomCoordinate1, randomCoordinate2};
     }
 
-    public int[] antSpecificGeneratedCoordinates(String movePattern, int[] currentCoordinates){
+    public int[] antSpecificGeneratedCoordinates(String movePattern, Ants ant, Queen queen){
         int[] coordinates;
+        int[] currentCoordinates = ant.getPosition();
         switch (movePattern) {
             case "patrol":
                 coordinates = new int[]{0, 0};
                 break;
             case "approachQueen":
                 //TODO: check x, move x, if it's = Queen x -> check y, move y
+                int[] queensPosition = queen.getPosition();
                 coordinates = new int[]{1, 1};
                 break;
             case "NORTH":
@@ -91,6 +95,13 @@ public class Colony {
 
     /**Generates soldiers, drones and workers, places them in the colony array.**/
     public void generateAnts(int numOfSoldiers, int numOfDrones, int numOfWorkers){
+        //Placing the Queen
+        Queen queen = new Queen();
+        int centerOfColony = centerOfColony();
+        int[] position = {centerOfColony, centerOfColony};
+        colony[centerOfColony][centerOfColony] = queen.letterForDisplay;
+        queen.setPosition(position);
+
         for(int i=0; i<numOfSoldiers; i++){
             Soldiers soldier = new Soldiers();
             soldier.setName("Soldier nr. "+(i+1));
@@ -111,11 +122,12 @@ public class Colony {
             worker.setMovePattern();
             placeAnt(worker, worker.letterForDisplay, "random");
         }
+
     }
 
     /**Checks generated coordinate - if it's already occupied, generates a new one and checks that one as well**/
     private void placeAnt(Ants ant, String letterForDisplay, String methodOfPlacement) {
-        int[] generatedCoordinates = new int[0];    
+        int[] generatedCoordinates = new int[0];
 
         if(methodOfPlacement.equals("random")){
                 generatedCoordinates = randomGeneratedCoordinates();
@@ -154,9 +166,10 @@ public class Colony {
 
     }
 
-    public void moveAnt(int[] oldPosition, int[] newPosition, Ants ant){
-        
-
+    public void moveAnt(Ants ant, Queen queen){
+        int[] oldPosition = ant.getPosition();
+        int[] newPosition = antSpecificGeneratedCoordinates(ant.movePattern, ant, queen);
+        ant.setPosition(newPosition);
     }
 
 

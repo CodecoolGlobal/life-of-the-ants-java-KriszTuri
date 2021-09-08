@@ -13,6 +13,10 @@ public abstract class Ants {
         this.y = position[1];
     }
 
+    public int[] getPosition(){
+        return new int[]{this.x, this.y};
+    }
+
     public void printAntData(){
         System.out.println("Name: "+ this.name +
                 " position: "+this.x+","+this.y +
